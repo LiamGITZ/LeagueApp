@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">FinalProject</string>
+    <string name="title_activity_login">loginActivity</string>
+    <string name="title_activity_base_login">BaseLogin</string>
+    <string name="loading">loading</string>
+    <string name="sign_out">sign out</string>
+    <string name="sign_in">sign in</string>
+    <string name="emailpassword_title_text">emailpasswword</string>
+    <string name="signed_out">signed out</string>
+    <string name="hint_password">password</string>
+    <string name="hint_email">email</string>
+    <string name="verify_email">verify email</string>
 </resources>
