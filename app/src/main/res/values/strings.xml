@@ -10,4 +10,7 @@
     <string name="hint_password">password</string>
     <string name="hint_email">email</string>
     <string name="verify_email">verify email</string>
+    <string name="title_activity_player_guides">PlayerGuides</string>
+    <string name="title_activity_player_profiles">PlayerProfiles</string>
+    <string name="title_activity_champion_statistics">ChampionStatistics</string>
 </resources>

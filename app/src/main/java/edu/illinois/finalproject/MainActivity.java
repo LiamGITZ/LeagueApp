@@ -1,8 +1,11 @@
 package edu.illinois.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -24,7 +27,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // seeting up the redirect buttons
+        Button guides = findViewById(R.id.Guides_button);
+        Button profiles = findViewById(R.id.Player_Profiles_button);
+        Button champstats = findViewById(R.id.Champion_statistics_button);
+
+        guides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Context context = view.getContext();
+                Intent guideIntent = new Intent(context, PlayerGuides.class);
+                context.startActivity(guideIntent);
+            }
+        });
+
+        profiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Context context = view.getContext();
+                Intent profilesIntent = new Intent(context, PlayerProfiles.class);
+                context.startActivity(profilesIntent);
+            }
+        });
+
+        champstats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Context context = view.getContext();
+                Intent champstatsIntent = new Intent(context, ChampionStatistics.class);
+                context.startActivity(champstatsIntent);
+            }
+        });
+
+
+
+
+
+        // code from
+//        https://firebase.google.com/docs/auth/android/firebaseui
         FirebaseApp.initializeApp(this);
+
 
 // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -35,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
 //                new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build());
 
 // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build(),
-                RC_SIGN_IN);
+//        startActivityForResult(
+//                AuthUI.getInstance()
+//                        .createSignInIntentBuilder()
+//                        .setAvailableProviders(providers)
+//                        .build(),
+//                RC_SIGN_IN);
 
     }
 
@@ -54,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == ResultCodes.OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                TextView textView = findViewById(R.id.textViewMain);
-                textView.setText(user.getEmail());
+
             } else {
                 // Sign in failed, check response for error code
                 // ...
