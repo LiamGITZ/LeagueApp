@@ -22,17 +22,17 @@
             android:resource="@array/preloaded_fonts"/>
 
         <activity
-            android:name=".PlayerGuides"
+            android:name=".PlayerGuides.PlayerGuides"
             android:label="@string/title_activity_player_guides"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".PlayerProfiles"
+            android:name=".PlayerProfile.PlayerProfile"
             android:label="@string/title_activity_player_profiles"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".ChampionStatistics"
+            android:name=".ChampionStatistics.ChampionStatistics"
             android:label="@string/title_activity_champion_statistics"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

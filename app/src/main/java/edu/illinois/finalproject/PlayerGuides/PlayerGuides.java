@@ -1,4 +1,4 @@
-package edu.illinois.finalproject;
+package edu.illinois.finalproject.PlayerGuides;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class ChampionStatistics extends AppCompatActivity {
+import edu.illinois.finalproject.R;
+
+public class PlayerGuides extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_champion_statistics);
+    setContentView(R.layout.activity_player_guides);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 

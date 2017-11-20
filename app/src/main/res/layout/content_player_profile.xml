@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="edu.illinois.finalproject.PlayerProfiles"
-    tools:showIn="@layout/activity_player_profiles">
+    tools:context="edu.illinois.finalproject.PlayerProfile.PlayerProfile"
+    tools:showIn="@layout/activity_player_profile">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/PlayerSummary"
@@ -62,20 +62,13 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="0dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/single_match_rview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlayerSummary"
-        tools:layout_editor_absoluteY="115dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@id/PlayerSummary"
+    tools:layout_editor_absoluteY="178dp"/>
 
 </android.support.constraint.ConstraintLayout>
