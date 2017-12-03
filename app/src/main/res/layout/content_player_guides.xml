@@ -9,4 +9,30 @@
     tools:context="edu.illinois.finalproject.PlayerGuides.PlayerGuides"
     tools:showIn="@layout/activity_player_guides">
 
+    <Button
+        android:id="@+id/View_Guides_Button"
+        android:layout_width="258dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:text="View Guides"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/Create_Guides_Button"
+        android:layout_width="258dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Create Guides"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/View_Guides_Button"
+        app:layout_constraintVertical_bias="0.252"/>
 </android.support.constraint.ConstraintLayout>

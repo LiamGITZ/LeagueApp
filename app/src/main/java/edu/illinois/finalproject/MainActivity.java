@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == ResultCodes.OK) {
                 // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
             } else {
                 // Sign in failed, check response for error code

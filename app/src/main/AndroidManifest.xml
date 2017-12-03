@@ -36,6 +36,11 @@
             android:label="@string/title_activity_champion_statistics"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".PlayerGuides.CreateGuide"
+            android:label="@string/title_activity_create_guide"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
