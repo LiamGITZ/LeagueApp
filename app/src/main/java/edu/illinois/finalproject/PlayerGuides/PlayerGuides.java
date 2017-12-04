@@ -2,6 +2,7 @@ package edu.illinois.finalproject.PlayerGuides;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Currency;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,11 +31,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.illinois.finalproject.LoLApiKey;
+import edu.illinois.finalproject.MainActivity;
 import edu.illinois.finalproject.R;
 
 public class PlayerGuides extends AppCompatActivity {
   private static final int  RC_SIGN_IN = 123;
-  private FirebaseUser user = null;
+  private Context context = this;
+  private static FirebaseUser user = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class PlayerGuides extends AppCompatActivity {
     Button viewGuides = findViewById(R.id.View_Guides_Button);
     Button createGuides = findViewById(R.id.Create_Guides_Button);
 
-    FirebaseApp.initializeApp(this);
+
     createGuides.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -57,10 +60,10 @@ public class PlayerGuides extends AppCompatActivity {
         } else {
           // code from
           // https://firebase.google.com/docs/auth/android/firebaseui
+          FirebaseApp.initializeApp(context);
 
 
-
-// Choose authentication providers
+          // Choose authentication providers
           List<AuthUI.IdpConfig> providers = Arrays.asList(
                   new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
 //                new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
@@ -68,31 +71,16 @@ public class PlayerGuides extends AppCompatActivity {
 //                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
 //                new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build());
 
-// Create and launch sign-in intent
+          // Create and launch sign-in intent
           startActivityForResult(
                   AuthUI.getInstance()
                           .createSignInIntentBuilder()
                           .setAvailableProviders(providers)
                           .build(),
                   RC_SIGN_IN);
-
-          if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == ResultCodes.OK) {
-              // Successfully signed in
-              user = FirebaseAuth.getInstance().getCurrentUser();
-              context.startActivity(guideIntent);
-            } else {
-              // Sign in failed, check response for error code
-              // ...
-            }
-          }
-
         }
       }
     });
-
 
 
 
@@ -104,6 +92,25 @@ public class PlayerGuides extends AppCompatActivity {
 //                .setAction("Action", null).show();
 //      }
 //    });
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == RC_SIGN_IN) {
+      IdpResponse response = IdpResponse.fromResultIntent(data);
+
+      if (resultCode == ResultCodes.OK) {
+        // Successfully signed in
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        Intent guideIntent = new Intent(context, CreateGuide.class);
+        context.startActivity(guideIntent);
+      } else {
+        // Sign in failed, check response for error code
+        // ...
+      }
+    }
   }
 
 }

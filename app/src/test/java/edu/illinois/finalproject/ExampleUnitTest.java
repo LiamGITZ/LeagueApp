@@ -117,12 +117,12 @@ public class ExampleUnitTest {
             RiotApi api = new RiotApi(config);
             final ExtendedSummoner extendedSummoner = new ExtendedSummoner();
 
-            ItemList itemList;
-            itemList = api.getDataItemList(Platform.OCE);
-                System.out.println(itemList.getData().values());
-                for (Item a : itemList.getData().values()){
-                    System.out.println(a.getName());
-                }
+//            ItemList itemList;
+//            itemList = api.getDataItemList(Platform.OCE);
+//                System.out.println(itemList.getData().values());
+//                for (Item a : itemList.getData().values()){
+//                    System.out.println(a.getName());
+//                }
 
             SummonerSpellList spellList;
             spellList = api.getDataSummonerSpellList(Platform.OCE);
