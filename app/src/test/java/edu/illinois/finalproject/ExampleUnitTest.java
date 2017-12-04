@@ -4,6 +4,10 @@ import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiAsync;
 import net.rithms.riot.api.endpoints.static_data.dto.ChampionList;
+import net.rithms.riot.api.endpoints.static_data.dto.Item;
+import net.rithms.riot.api.endpoints.static_data.dto.ItemList;
+import net.rithms.riot.api.endpoints.static_data.dto.SummonerSpell;
+import net.rithms.riot.api.endpoints.static_data.dto.SummonerSpellList;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.api.request.AsyncRequest;
 import net.rithms.riot.api.request.RequestAdapter;
@@ -11,6 +15,7 @@ import net.rithms.riot.constant.Platform;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -104,6 +109,27 @@ public class ExampleUnitTest {
             extendedSummoner.championMap.put(c.getId(), c);
             System.out.println(c.getName());
         }
-
     }
+
+        @Test
+        public void constantData() throws Exception {
+            ApiConfig config = new ApiConfig().setKey(LoLApiKey.apiKey);
+            RiotApi api = new RiotApi(config);
+            final ExtendedSummoner extendedSummoner = new ExtendedSummoner();
+
+            ItemList itemList;
+            itemList = api.getDataItemList(Platform.OCE);
+                System.out.println(itemList.getData().values());
+                for (Item a : itemList.getData().values()){
+                    System.out.println(a.getName());
+                }
+
+            SummonerSpellList spellList;
+            spellList = api.getDataSummonerSpellList(Platform.OCE);
+            for (SummonerSpell a : spellList.getData().values()){
+                System.out.println(a.getName());
+            }
+
+        }
+
 }

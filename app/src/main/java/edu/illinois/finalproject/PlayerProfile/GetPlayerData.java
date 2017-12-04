@@ -27,7 +27,6 @@ public class GetPlayerData {
    ApiConfig config = new ApiConfig().setKey(LoLApiKey.apiKey);
    RiotApi api = new RiotApi(config);
    RiotApiAsync apiAsync = api.getAsyncApi();
-   net.rithms.riot.api.request.ratelimit.DefaultRateLimitHandler ratelimit = new DefaultRateLimitHandler();
 
    final ExtendedSummoner eSummoner = new ExtendedSummoner();
 

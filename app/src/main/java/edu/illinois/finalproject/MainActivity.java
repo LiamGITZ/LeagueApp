@@ -23,7 +23,6 @@ import edu.illinois.finalproject.PlayerGuides.PlayerGuides;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final int  RC_SIGN_IN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,51 +60,12 @@ public class MainActivity extends AppCompatActivity {
                 context.startActivity(champstatsIntent);
             }
         });
-
-
-
-
-
-        // code from
-//        https://firebase.google.com/docs/auth/android/firebaseui
-        FirebaseApp.initializeApp(this);
-
-
-// Choose authentication providers
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
-//                new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-//                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-//                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-//                new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build());
-
-// Create and launch sign-in intent
-//        startActivityForResult(
-//                AuthUI.getInstance()
-//                        .createSignInIntentBuilder()
-//                        .setAvailableProviders(providers)
-//                        .build(),
-//                RC_SIGN_IN);
-
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
 
-            if (resultCode == ResultCodes.OK) {
-                // Successfully signed in
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            } else {
-                // Sign in failed, check response for error code
-                // ...
-            }
-        }
-    }
+
 
 
 }
