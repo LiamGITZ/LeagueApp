@@ -1,5 +1,6 @@
 package edu.illinois.finalproject.PlayerGuides;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +89,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ChildRow childRow = (ChildRow) getChild(groupPosition, childPosition);
+        final ChildRow childRow = (ChildRow) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater)
                     context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -103,13 +105,42 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         final TextView childText = (TextView) convertView.findViewById(R.id.child_text);
         childText.setText(childRow.getText().trim());
 
+
+
         final View finalConvertView = convertView;
         childText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(finalConvertView.getContext()
-                        , childText.getText()
-                        , Toast.LENGTH_SHORT).show();
+                View rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
+                final LinearLayout itemList = rootView.findViewById(R.id.startingItemsList);
+                final ImageView addedItem = new ImageView(rootView.getContext());
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                        , ViewGroup.LayoutParams.MATCH_PARENT);
+                param.setMargins(5,2,2,2);
+                addedItem.setLayoutParams(param);
+                addedItem.setImageResource(R.drawable.barrier);
+                addedItem.getLayoutParams().height=150;
+                addedItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        itemList.removeView(addedItem);
+                        Toast.makeText(finalConvertView.getContext()
+                                , childText.getText()+" Removed from items"
+                                , Toast.LENGTH_SHORT).show();
+                    }
+                });
+                if (itemList != null) {
+                    itemList.addView(addedItem);
+
+                    Picasso.with(context)
+                            .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/"+childRow.getIcon()+".png")
+                            .into(addedItem);
+
+                    Toast.makeText(finalConvertView.getContext()
+                            , childText.getText()+" Added to items"
+                            , Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 

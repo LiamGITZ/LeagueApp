@@ -11,7 +11,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="57dp">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -34,16 +36,19 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:scrollbars="none"
             app:layout_constraintTop_toTopOf="parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="300dp">
 
                 <TextView
                     android:id="@+id/guideNamePrompt"
@@ -76,10 +81,12 @@
                     android:layout_height="wrap_content"
                     android:text="Summoners:"/>
 
+
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:layout_weight="1">
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="57dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -133,10 +140,14 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
                         android:orientation="horizontal"
-                        tools:layout_editor_absoluteX="9dp"
-                        tools:layout_editor_absoluteY="8dp">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
                             android:id="@+id/barrierSelect"
@@ -185,11 +196,96 @@
                     </LinearLayout>
                 </android.support.constraint.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/startingItemsPrompt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Starting Items:"/>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                              android:layout_width="match_parent"
+                              android:layout_height="500dp"
+                              android:layout_margin="16dp"
+                              android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/startingItemsPrompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Starting Items:"/>
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                  android:id="@+id/startingItemsList"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_margin="16dp"
+                                  android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/rndImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"/>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.SearchView
+                        android:id="@+id/action_search2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="4dp"
+                        android:scrollbars="none">
+                    </android.support.v7.widget.SearchView>
+
+                    <ExpandableListView
+                        android:id="@+id/expandableListView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="16dp"
+                        android:nestedScrollingEnabled="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:scrollbars="none"/>
+                </LinearLayout>
+
+                <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                              <!--android:layout_width="match_parent"-->
+                              <!--android:layout_height="500dp"-->
+                              <!--android:layout_margin="16dp"-->
+                              <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/championCounterPrompt"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Champion Counter:"/>-->
+
+
+                    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                                  <!--android:id="@+id/championCounterList"-->
+                                  <!--android:layout_width="match_parent"-->
+                                  <!--android:layout_height="wrap_content"-->
+                                  <!--android:layout_margin="16dp"-->
+                                  <!--android:orientation="horizontal">-->
+
+                        <!--<ImageView-->
+                            <!--android:id="@+id/rndImage2"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="50dp"/>-->
+                    <!--</LinearLayout>-->
+
+                    <!--<android.support.v7.widget.SearchView-->
+                        <!--android:id="@+id/action_SearchCounter"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:elevation="4dp"-->
+                        <!--android:scrollbars="none">-->
+                    <!--</android.support.v7.widget.SearchView>-->
+
+                    <!--<ExpandableListView-->
+                        <!--android:id="@+id/expandableListViewChampion"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="0dp"-->
+                        <!--android:layout_marginBottom="16dp"-->
+                        <!--android:layout_marginTop="16dp"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:nestedScrollingEnabled="true"-->
+                        <!--android:padding="8dp"-->
+                        <!--android:scrollbars="none"/>-->
+                <!--</LinearLayout>-->
 
 
             </LinearLayout>

@@ -1,29 +1,34 @@
 package edu.illinois.finalproject.PlayerGuides;
 
-import android.app.SearchManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.SearchView;
+import android.widget.LinearLayout;
+
+import net.rithms.riot.api.endpoints.static_data.dto.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.illinois.finalproject.LolConstants;
 import edu.illinois.finalproject.R;
 
 public class CreateGuide extends AppCompatActivity {
   private int currentSummonerArrayPos = 0;
   private String[] summonersChosen = new String[2];
+
+  // search view variables
+  private android.support.v7.widget.SearchView searchView;
+  private MyExpandableListAdapter listAdapter;
+  private ExpandableListView myList;
+  private ArrayList<ParentRow> parentList = new ArrayList<ParentRow>();
+  private ArrayList<ParentRow> showTheseParentList = new ArrayList<ParentRow>();
 
 
   @Override
@@ -32,6 +37,46 @@ public class CreateGuide extends AppCompatActivity {
     setContentView(R.layout.activity_create_guide);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+
+    // create item selector
+    setContentView(R.layout.activity_create_guide);
+    searchView = (android.support.v7.widget.SearchView) findViewById(R.id.action_search2);
+    searchView.setQueryHint("Enter Search");
+    myList = (ExpandableListView) findViewById(R.id.expandableListView2);
+
+    searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+//        List<ItemObject> dictionaryObject = databaseObject.searchDictionaryWords(query);
+//        listAdapter = new MyExpandableListAdapter(this, dictionaryObject);
+        listAdapter.filterData(query);
+        expandAll();
+        myList.setAdapter(listAdapter);
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+          }
+        });
+        return true;
+      }
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+        expandAll();
+        return false;
+      }
+    });
+
+    parentList = new ArrayList<ParentRow>();
+    showTheseParentList = new ArrayList<ParentRow>();
+
+    // The app will crash if display list is not called here.
+    displayList();
+
+    // This expands the list.
+    expandAll();
+
+
 
     // summoner selecting
     final ImageView smite = findViewById(R.id.smiteSelect);
@@ -153,7 +198,7 @@ public class CreateGuide extends AppCompatActivity {
           replace.setBackground(null);
         }
         exhaust.setBackground(highlight);
-        summonersChosen[currentSummonerArrayPos] = "Barrier";
+        summonersChosen[currentSummonerArrayPos] = "Exhaust";
         if (currentSummonerArrayPos == 0) {
           currentSummonerArrayPos = 1;
         } else {
@@ -218,7 +263,48 @@ public class CreateGuide extends AppCompatActivity {
 
   }
 
+  private void loadData() {
+    ArrayList<ChildRow> childRows = new ArrayList<ChildRow>();
+    ParentRow parentRow = null;
 
+    for (Item i : LolConstants.itemList.getData().values()){
+      childRows.add(new ChildRow(i.getId(), i.getName()));
+    }
+    parentRow = new ParentRow("Items", childRows);
+    parentList.add(parentRow);
+
+//    childRows.add(new ChildRow(R.drawable.exhaust
+//            , "Lorem ipsum dolor sit amet, consectetur adipiscing elit."));
+//    childRows.add(new ChildRow(R.mipmap.exhaust
+//            , "Sit Fido, sit."));
+//    parentRow = new ParentRow("First Group", childRows);
+//    parentList.add(parentRow);
+//
+//    childRows = new ArrayList<ChildRow>();
+//    childRows.add(new ChildRow(R.mipmap.exhaust
+//            , "Fido is the name of my dog."));
+//    childRows.add(new ChildRow(R.mipmap.exhaust
+//            , "Add two plus two."));
+//    parentRow = new ParentRow("Second Group", childRows);
+//    parentList.add(parentRow);
+  }
+
+  private void expandAll() {
+    int count = listAdapter.getGroupCount();
+    for (int i = 0; i < count; i++) {
+      myList.expandGroup(i);
+    } //end for (int i = 0; i < count; i++)
+  }
+
+  private void displayList() {
+    loadData();
+
+    myList = (ExpandableListView) findViewById(R.id.expandableListView2);
+    listAdapter = new MyExpandableListAdapter(this, parentList);
+
+    myList.setAdapter(listAdapter);
+  }
 }
+
 
 
