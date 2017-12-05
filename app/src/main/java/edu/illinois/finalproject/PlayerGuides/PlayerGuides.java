@@ -46,8 +46,16 @@ public class PlayerGuides extends AppCompatActivity {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
-    Button viewGuides = findViewById(R.id.View_Guides_Button);
-    Button createGuides = findViewById(R.id.Create_Guides_Button);
+    final Button viewGuides = findViewById(R.id.View_Guides_Button);
+    final Button createGuides = findViewById(R.id.Create_Guides_Button);
+
+    viewGuides.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent viewGuidesIntet = new Intent(context, SearchItems.class);
+        context.startActivity(viewGuidesIntet);
+      }
+    });
 
 
     createGuides.setOnClickListener(new View.OnClickListener() {

@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LolConstants.getData();
+
         // seeting up the redirect buttons
         Button guides = findViewById(R.id.Guides_button);
         Button profiles = findViewById(R.id.Player_Profiles_button);
