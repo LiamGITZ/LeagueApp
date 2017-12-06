@@ -23,7 +23,7 @@ import java.util.List;
 		}
  */
 public class Guide {
-  private String id;
+  private String user;
   private String title;
   private String introduction;
   private String body;
@@ -36,12 +36,12 @@ public class Guide {
   private List counteredBy;
   private List quickTips;
 
-  public String getId() {
-    return id;
+  public String getUser() {
+    return user;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setUser(String user) {
+    this.user = user;
   }
 
   public String getTitle() {

@@ -50,6 +50,12 @@
                 android:orientation="vertical"
                 android:paddingBottom="300dp">
 
+                <ImageView
+                    android:id="@+id/championGuidePicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@mipmap/exhaust"/>
+
                 <TextView
                     android:id="@+id/guideNamePrompt"
                     android:layout_width="match_parent"
@@ -239,7 +245,14 @@
                         android:layout_weight="1"
                         android:padding="8dp"
                         android:scrollbars="none"/>
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/Create_Guides_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Create"/>
 
                 <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
                               <!--android:layout_width="match_parent"-->

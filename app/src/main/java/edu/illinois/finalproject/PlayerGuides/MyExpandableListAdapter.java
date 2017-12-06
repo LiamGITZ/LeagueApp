@@ -2,6 +2,8 @@ package edu.illinois.finalproject.PlayerGuides;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,11 +98,18 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.child_row, null);
         }
 
-        ImageView childIcon = (ImageView) convertView.findViewById(R.id.child_icon);
+        final ImageView childIcon = (ImageView) convertView.findViewById(R.id.child_icon);
 //        childIcon.setImageResource(childRow.getIcon());
-        Picasso.with(context)
-                .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/"+childRow.getIcon()+".png")
-                .into(childIcon);
+        if (childRow.getIcon()>500) {
+            Picasso.with(context)
+                    .load("http://ddragon.leagueoflegends.com/cdn/7.23.1/img/item/" + childRow.getIcon() + ".png")
+                    .into(childIcon);
+        } else {
+            Picasso.with(context)
+                    .load("http://ddragon.leagueoflegends.com/cdn/7.23.1/img/champion/" +
+                    childRow.getText() + ".png")
+                    .into(childIcon);
+        }
 
         final TextView childText = (TextView) convertView.findViewById(R.id.child_text);
         childText.setText(childRow.getText().trim());
@@ -111,34 +120,44 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         childText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
-                final LinearLayout itemList = rootView.findViewById(R.id.startingItemsList);
-                final ImageView addedItem = new ImageView(rootView.getContext());
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                        , ViewGroup.LayoutParams.MATCH_PARENT);
-                param.setMargins(5,2,2,2);
-                addedItem.setLayoutParams(param);
-                addedItem.setImageResource(R.drawable.barrier);
-                addedItem.getLayoutParams().height=150;
-                addedItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        itemList.removeView(addedItem);
+                // add item to starting items
+                if (childRow.getIcon() > 500) {
+                    View rootView = ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+                    final LinearLayout itemList = rootView.findViewById(R.id.startingItemsList);
+                    final ImageView addedItem = new ImageView(rootView.getContext());
+                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                            , ViewGroup.LayoutParams.MATCH_PARENT);
+                    param.setMargins(5, 2, 2, 2);
+                    addedItem.setLayoutParams(param);
+                    addedItem.setImageResource(R.drawable.barrier);
+                    addedItem.getLayoutParams().height = 150;
+                    addedItem.setTag(childText.getText());
+                    addedItem.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            itemList.removeView(addedItem);
+                            Toast.makeText(finalConvertView.getContext()
+                                    , childText.getText() + " Removed from items"
+                                    , Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    if (itemList != null) {
+                        itemList.addView(addedItem);
+
+                        Picasso.with(context)
+                                .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" + childRow.getIcon() + ".png")
+                                .into(addedItem);
+
                         Toast.makeText(finalConvertView.getContext()
-                                , childText.getText()+" Removed from items"
+                                , childText.getText() + " Added to items"
                                 , Toast.LENGTH_SHORT).show();
+
                     }
-                });
-                if (itemList != null) {
-                    itemList.addView(addedItem);
-
-                    Picasso.with(context)
-                            .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/"+childRow.getIcon()+".png")
-                            .into(addedItem);
-
-                    Toast.makeText(finalConvertView.getContext()
-                            , childText.getText()+" Added to items"
-                            , Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent myIntent = new Intent(context, CreateGuide.class);
+                    myIntent.putExtra("key",childRow.getText());
+//                    myIntent.putExtra("secondKeyName","SecondKeyValue");
+                      context.startActivity(myIntent);
 
                 }
             }

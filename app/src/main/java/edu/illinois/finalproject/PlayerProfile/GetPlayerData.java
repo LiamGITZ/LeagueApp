@@ -73,14 +73,6 @@ public class GetPlayerData {
    });
 
 
-   // get champion information
-   AsyncRequest requestChampion = apiAsync.getDataChampionList(platform);
-   requestChampion.addListeners(new RequestAdapter() {
-     @Override
-     public void onRequestSucceeded(AsyncRequest request) {
-       eSummoner.champions = request.getDto();
-     }
-   });
 
    // getting patch information
    AsyncRequest requestRealm = apiAsync.getDataRealm(platform);
@@ -100,10 +92,6 @@ public class GetPlayerData {
      RiotApi.log.log(Level.SEVERE, "Waiting Interrupted", e);
    }
 
-   // creating champion map by id
-   for (net.rithms.riot.api.endpoints.static_data.dto.Champion c : eSummoner.champions.getData().values()) {
-     eSummoner.championMap.put(c.getId(), c);
-   }
 
    return eSummoner;
  }

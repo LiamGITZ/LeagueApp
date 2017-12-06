@@ -1,19 +1,30 @@
 package edu.illinois.finalproject.PlayerGuides;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import net.rithms.riot.api.endpoints.static_data.dto.Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.illinois.finalproject.LolConstants;
@@ -77,6 +88,16 @@ public class CreateGuide extends AppCompatActivity {
     expandAll();
 
 
+
+    // getIntent() is a method from the started activity for selected champion
+    final String championName = getIntent().getExtras().getString("key","defaultKey");
+    ImageView championIcon = findViewById(R.id.championGuidePicture);
+    if (championName!=null){
+      Picasso.with(this)
+              .load("http://ddragon.leagueoflegends.com/cdn/7.23.1/img/champion/" +
+                      championName + ".png")
+              .into(championIcon);
+    }
 
     // summoner selecting
     final ImageView smite = findViewById(R.id.smiteSelect);
@@ -258,6 +279,47 @@ public class CreateGuide extends AppCompatActivity {
         } else {
           currentSummonerArrayPos = 0;
         }
+      }
+    });
+
+    // create guide
+    final EditText guideNameView = findViewById(R.id.guideName);
+    final EditText guideIntroductionView = findViewById(R.id.introduction);
+    final LinearLayout startingItemsLayout = findViewById(R.id.startingItemsList);
+
+    final Context context = this;
+    Button createGuide = findViewById(R.id.Create_Guides_Button);
+    createGuide.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        String guideName = guideNameView.getText().toString();
+        String guideIntroduction = guideIntroductionView.getText().toString();
+        List<String> summoners = Arrays.asList(summonersChosen);
+
+        List<String> startingItems = new ArrayList<>();
+        // getting starting items from layout
+        final int childCount = startingItemsLayout.getChildCount();
+        for (int i = 1; i < childCount; i++) {
+          View v = startingItemsLayout.getChildAt(i);
+          startingItems.add(String.valueOf(v.getTag()));
+        }
+
+        Guide champGuide = new Guide();
+        champGuide.setTitle(guideName);
+        champGuide.setIntroduction(guideIntroduction);
+        champGuide.setSummoners(summoners);
+        champGuide.setStartingItems(startingItems);
+
+        // push to firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("champions/"+championName+"/guides/");
+
+        myRef.push().setValue(champGuide);
+
+        Intent intent = new Intent(context, PlayerGuides.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
       }
     });
 

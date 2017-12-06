@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.support.v7.widget.SearchView;
 
+import net.rithms.riot.api.endpoints.static_data.dto.Champion;
 import net.rithms.riot.api.endpoints.static_data.dto.Item;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import edu.illinois.finalproject.LolConstants;
 import edu.illinois.finalproject.R;
 
-public class SearchItems extends AppCompatActivity {
+public class ChampionSelect extends AppCompatActivity {
   private SearchManager searchManager;
   private android.support.v7.widget.SearchView searchView;
   private MyExpandableListAdapter listAdapter;
@@ -70,10 +71,12 @@ public class SearchItems extends AppCompatActivity {
     ArrayList<ChildRow> childRows = new ArrayList<ChildRow>();
     ParentRow parentRow = null;
 
-    for (Item i : LolConstants.itemList.getData().values()){
-      childRows.add(new ChildRow(i.getId(), i.getName()));
+    for (Champion i : LolConstants.champions.getData().values()){
+      childRows.add(new ChildRow(i.getId(), i.getKey())
+
+      );
     }
-    parentRow = new ParentRow("Items", childRows);
+    parentRow = new ParentRow("Champions", childRows);
     parentList.add(parentRow);
 
 //    childRows.add(new ChildRow(R.drawable.exhaust

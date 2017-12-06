@@ -26,7 +26,4 @@ public class ExtendedSummoner {
   public LeaguePosition leagueFlexSR;
   public LeaguePosition leagueFlexTT;
   public MatchList matches;
-  public ChampionList champions;
-  public Map<Integer,Champion> championMap = new HashMap<>();
-
 }

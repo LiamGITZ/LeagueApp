@@ -42,6 +42,7 @@
         <activity
             android:name=".PlayerGuides.CreateGuide"
             android:label="@string/title_activity_create_guide"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -51,8 +52,9 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
-            android:name=".PlayerGuides.SearchItems"
+            android:name=".PlayerGuides.ChampionSelect"
             android:label="@string/title_activity_search_items"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

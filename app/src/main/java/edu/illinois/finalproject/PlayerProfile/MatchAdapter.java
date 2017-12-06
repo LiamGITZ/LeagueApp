@@ -27,6 +27,7 @@ import java.util.Map;
 
 import edu.illinois.finalproject.ExtendedSummoner;
 import edu.illinois.finalproject.LoLApiKey;
+import edu.illinois.finalproject.LolConstants;
 import edu.illinois.finalproject.R;
 
 
@@ -81,7 +82,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder>{
     holder.score.setText(String.valueOf(currentMatch.getLane()));
 
     net.rithms.riot.api.endpoints.static_data.dto.Champion currentChampion =
-            extendedSummoner.championMap.get(currentMatch.getChampion());
+            LolConstants.championMap.get(currentMatch.getChampion());
     String champName = currentChampion.getKey();
     String summonerIconUrl = "http://ddragon.leagueoflegends.com/cdn/" +
             extendedSummoner.relm.getDd() + "/img/champion/" +
