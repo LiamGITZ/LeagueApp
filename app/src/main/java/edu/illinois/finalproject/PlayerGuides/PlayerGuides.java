@@ -23,7 +23,7 @@ import edu.illinois.finalproject.R;
 public class PlayerGuides extends AppCompatActivity {
   private static final int  RC_SIGN_IN = 123;
   private Context context = this;
-  private static FirebaseUser user = null;
+  public static FirebaseUser user = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class PlayerGuides extends AppCompatActivity {
       if (resultCode == ResultCodes.OK) {
         // Successfully signed in
         user = FirebaseAuth.getInstance().getCurrentUser();
-        Intent guideIntent = new Intent(context, CreateGuide.class);
+        Intent guideIntent = new Intent(context, ChampionSelect.class);
         context.startActivity(guideIntent);
       } else {
         // Sign in failed, check response for error code

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -309,12 +310,17 @@ public class CreateGuide extends AppCompatActivity {
         champGuide.setIntroduction(guideIntroduction);
         champGuide.setSummoners(summoners);
         champGuide.setStartingItems(startingItems);
+        champGuide.setUser(PlayerGuides.user.getUid());
 
         // push to firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("champions/"+championName+"/guides/");
+        DatabaseReference guideRef = database.getReference("champions/"+championName+"/guides/");
+        String guideId = guideRef.push().getKey();
+        guideRef.push().setValue(champGuide);
+        // add guide to User
+        DatabaseReference userRef = database.getReference("users/"+PlayerGuides.user.getUid()+"/");
+        userRef.push().setValue(guideId);
 
-        myRef.push().setValue(champGuide);
 
         Intent intent = new Intent(context, PlayerGuides.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
