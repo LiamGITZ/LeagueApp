@@ -19,4 +19,7 @@
     <string name="search">search</string>
     <string name="action_settings">action_settings</string>
     <string name="title_activity_search_items">SearchItems</string>
+    <string name="title">Title:</string>
+    <string name="title_activity_view_guides">ViewGuides</string>
+    <string name="title_activity_single_guide_viewer">SingleGuideViewer</string>
 </resources>

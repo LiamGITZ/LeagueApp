@@ -13,9 +13,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -40,7 +38,7 @@ public class CreateGuide extends AppCompatActivity {
   private MyExpandableListAdapter listAdapter;
   private ExpandableListView myList;
   private ArrayList<ParentRow> parentList = new ArrayList<ParentRow>();
-  private ArrayList<ParentRow> showTheseParentList = new ArrayList<ParentRow>();
+  private ArrayList<ParentRow> filteredParentList = new ArrayList<ParentRow>();
 
 
   @Override
@@ -51,6 +49,8 @@ public class CreateGuide extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
     // create item selector
+    // code from:
+    // http://robinsonprogramming.com/tuts/
     setContentView(R.layout.activity_create_guide);
     searchView = (android.support.v7.widget.SearchView) findViewById(R.id.action_search2);
     searchView.setQueryHint("Enter Search");
@@ -80,7 +80,7 @@ public class CreateGuide extends AppCompatActivity {
     });
 
     parentList = new ArrayList<ParentRow>();
-    showTheseParentList = new ArrayList<ParentRow>();
+    filteredParentList = new ArrayList<ParentRow>();
 
     // The app will crash if display list is not called here.
     displayList();
@@ -368,7 +368,7 @@ public class CreateGuide extends AppCompatActivity {
     loadData();
 
     myList = (ExpandableListView) findViewById(R.id.expandableListView2);
-    listAdapter = new MyExpandableListAdapter(this, parentList);
+    listAdapter = new MyExpandableListAdapter(this, parentList , null);
 
     myList.setAdapter(listAdapter);
   }

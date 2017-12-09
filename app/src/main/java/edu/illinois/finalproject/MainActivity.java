@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // seeting up the redirect buttons
         Button guides = findViewById(R.id.Guides_button);
         Button profiles = findViewById(R.id.Player_Profiles_button);
-        Button champstats = findViewById(R.id.Champion_statistics_button);
+//        Button champstats = findViewById(R.id.Champion_statistics_button);
 
         guides.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,19 +54,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        champstats.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Context context = view.getContext();
-                Intent champstatsIntent = new Intent(context, ChampionStatistics.class);
-                context.startActivity(champstatsIntent);
-            }
-        });
+//        champstats.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final Context context = view.getContext();
+//                Intent champstatsIntent = new Intent(context, ChampionStatistics.class);
+//                context.startActivity(champstatsIntent);
+//            }
+//        });
     }
-
-
-
-
 
 
 

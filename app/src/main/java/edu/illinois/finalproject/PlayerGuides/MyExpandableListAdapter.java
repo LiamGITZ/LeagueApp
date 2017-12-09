@@ -28,14 +28,16 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<ParentRow> parentRowList;
     private ArrayList<ParentRow> originalList;
+    private String createOrView;
 
     public MyExpandableListAdapter(Context context
-            , ArrayList<ParentRow> originalList) {
+            , ArrayList<ParentRow> originalList, String createOrView) {
         this.context = context;
         this.parentRowList = new ArrayList<>();
         this.parentRowList.addAll(originalList);
         this.originalList = new ArrayList<>();
         this.originalList.addAll(originalList);
+        this.createOrView = createOrView;
     }
 
     @Override
@@ -154,10 +156,15 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
                     }
                 } else {
-                    Intent myIntent = new Intent(context, CreateGuide.class);
-                    myIntent.putExtra("key",childRow.getText());
-//                    myIntent.putExtra("secondKeyName","SecondKeyValue");
-                      context.startActivity(myIntent);
+                    if (createOrView.equals("create")) {
+                        Intent myIntent = new Intent(context, CreateGuide.class);
+                        myIntent.putExtra("key", childRow.getText());
+                        context.startActivity(myIntent);
+                    } else if (createOrView.equals("view")) {
+                        Intent myIntent = new Intent(context, ViewGuides.class);
+                        myIntent.putExtra("key", childRow.getText());
+                        context.startActivity(myIntent);
+                    }
 
                 }
             }

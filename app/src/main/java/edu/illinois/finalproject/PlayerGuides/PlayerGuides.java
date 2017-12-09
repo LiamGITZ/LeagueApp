@@ -38,8 +38,9 @@ public class PlayerGuides extends AppCompatActivity {
     viewGuides.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-//        Intent viewGuidesIntet = new Intent(context, ChampionSelect.class);
-//        context.startActivity(viewGuidesIntet);
+        Intent createGuideIntent = new Intent(context, ChampionSelect.class);
+        createGuideIntent.putExtra("key1","view");
+        context.startActivity(createGuideIntent);
       }
     });
 
@@ -98,8 +99,9 @@ public class PlayerGuides extends AppCompatActivity {
       if (resultCode == ResultCodes.OK) {
         // Successfully signed in
         user = FirebaseAuth.getInstance().getCurrentUser();
-        Intent guideIntent = new Intent(context, ChampionSelect.class);
-        context.startActivity(guideIntent);
+        Intent createGuideIntent = new Intent(context, ChampionSelect.class);
+        createGuideIntent.putExtra("key1","create");
+        context.startActivity(createGuideIntent);
       } else {
         // Sign in failed, check response for error code
         // ...

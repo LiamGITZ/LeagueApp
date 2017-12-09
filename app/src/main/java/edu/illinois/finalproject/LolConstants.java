@@ -5,6 +5,7 @@ import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiAsync;
 import net.rithms.riot.api.endpoints.static_data.dto.Champion;
 import net.rithms.riot.api.endpoints.static_data.dto.ChampionList;
+import net.rithms.riot.api.endpoints.static_data.dto.Item;
 import net.rithms.riot.api.endpoints.static_data.dto.ItemList;
 import net.rithms.riot.api.endpoints.static_data.dto.SummonerSpellList;
 import net.rithms.riot.api.request.AsyncRequest;
@@ -23,6 +24,7 @@ public class LolConstants {
   public static ChampionList champions;
   public static Map<Integer,Champion> championMap = new HashMap<>();
   public static ItemList itemList;
+  public static Map<String,Item> itemMap = new HashMap<>();
   public static SummonerSpellList spellList;
 
   public static void getData(){
@@ -72,5 +74,11 @@ public class LolConstants {
     for (net.rithms.riot.api.endpoints.static_data.dto.Champion c : champions.getData().values()) {
       championMap.put(c.getId(), c);
     }
+
+    // creating item map by id
+    for (Item i : itemList.getData().values()) {
+      itemMap.put(i.getName(), i);
+    }
+
   }
 }

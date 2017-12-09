@@ -1,5 +1,8 @@
 package edu.illinois.finalproject.PlayerGuides;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -22,19 +25,19 @@ import java.util.List;
 		"Quick Tips": ["W is an Auto Reset","Can hop to Wards"]
 		}
  */
-public class Guide {
+public class Guide implements Parcelable {
   private String user;
   private String title;
   private String introduction;
   private String body;
-  private List StartingItems;
-  private List CoreItems;
-  private List SituationalItems;
-  private List Summoners;
-  private List abilitySkillOrder;
-  private List counters;
-  private List counteredBy;
-  private List quickTips;
+  private List<String> StartingItems;
+  private List<String> CoreItems;
+  private List<String> SituationalItems;
+  private List<String> Summoners;
+  private List<String> abilitySkillOrder;
+  private List<String> counters;
+  private List<String> counteredBy;
+  private List<String> quickTips;
 
   public String getUser() {
     return user;
@@ -131,4 +134,55 @@ public class Guide {
   public void setQuickTips(List quickTips) {
     this.quickTips = quickTips;
   }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.user);
+    dest.writeString(this.title);
+    dest.writeString(this.introduction);
+    dest.writeString(this.body);
+    dest.writeStringList(this.StartingItems);
+    dest.writeStringList(this.CoreItems);
+    dest.writeStringList(this.SituationalItems);
+    dest.writeStringList(this.Summoners);
+    dest.writeStringList(this.abilitySkillOrder);
+    dest.writeStringList(this.counters);
+    dest.writeStringList(this.counteredBy);
+    dest.writeStringList(this.quickTips);
+  }
+
+  public Guide() {
+  }
+
+  protected Guide(Parcel in) {
+    this.user = in.readString();
+    this.title = in.readString();
+    this.introduction = in.readString();
+    this.body = in.readString();
+    this.StartingItems = in.createStringArrayList();
+    this.CoreItems = in.createStringArrayList();
+    this.SituationalItems = in.createStringArrayList();
+    this.Summoners = in.createStringArrayList();
+    this.abilitySkillOrder = in.createStringArrayList();
+    this.counters = in.createStringArrayList();
+    this.counteredBy = in.createStringArrayList();
+    this.quickTips = in.createStringArrayList();
+  }
+
+  public static final Parcelable.Creator<Guide> CREATOR = new Parcelable.Creator<Guide>() {
+    @Override
+    public Guide createFromParcel(Parcel source) {
+      return new Guide(source);
+    }
+
+    @Override
+    public Guide[] newArray(int size) {
+      return new Guide[size];
+    }
+  };
 }

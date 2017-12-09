@@ -15,7 +15,9 @@ import net.rithms.riot.constant.Platform;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -85,15 +87,15 @@ public class ExampleUnitTest {
         requestChampion.addListeners(new RequestAdapter() {
             @Override
             public void onRequestSucceeded(AsyncRequest request) {
-                extendedSummoner.champions = request.getDto();
+                LolConstants.champions = request.getDto();
             }
         });
         requestChampion.await();
 
         if (requestChampion.isDone()){
         // creating champion map by id
-            for (net.rithms.riot.api.endpoints.static_data.dto.Champion c : extendedSummoner.champions.getData().values()) {
-                extendedSummoner.championMap.put(c.getId(), c);
+            for (net.rithms.riot.api.endpoints.static_data.dto.Champion c : LolConstants.champions.getData().values()) {
+                LolConstants.championMap.put(c.getId(), c);
             }
         }
     }
@@ -104,9 +106,9 @@ public class ExampleUnitTest {
         RiotApi api = new RiotApi(config);
         final ExtendedSummoner extendedSummoner = new ExtendedSummoner();
 
-        extendedSummoner.champions = api.getDataChampionList(Platform.NA);
-        for (net.rithms.riot.api.endpoints.static_data.dto.Champion c : extendedSummoner.champions.getData().values()) {
-            extendedSummoner.championMap.put(c.getId(), c);
+        LolConstants.champions = api.getDataChampionList(Platform.NA);
+        for (net.rithms.riot.api.endpoints.static_data.dto.Champion c : LolConstants.champions.getData().values()) {
+            LolConstants.championMap.put(c.getId(), c);
             System.out.println(c.getName());
         }
     }
@@ -115,20 +117,28 @@ public class ExampleUnitTest {
         public void constantData() throws Exception {
             ApiConfig config = new ApiConfig().setKey(LoLApiKey.apiKey);
             RiotApi api = new RiotApi(config);
-            final ExtendedSummoner extendedSummoner = new ExtendedSummoner();
 
-//            ItemList itemList;
-//            itemList = api.getDataItemList(Platform.OCE);
-//                System.out.println(itemList.getData().values());
+
+            ItemList itemList;
+            Map<String,Item> itemMap = new HashMap<>();
+
+            itemList = api.getDataItemList(Platform.JP);
+            System.out.println(itemList.getData().values());
+
+            for (Item i : itemList.getData().values()) {
+                itemMap.put(i.getName(), i);
+            }
+            System.out.println(itemMap.get("Statikk Shiv").getId());
 //                for (Item a : itemList.getData().values()){
 //                    System.out.println(a.getName());
 //                }
 
-            SummonerSpellList spellList;
-            spellList = api.getDataSummonerSpellList(Platform.OCE);
-            for (SummonerSpell a : spellList.getData().values()){
-                System.out.println(a.getName());
-            }
+
+//            SummonerSpellList spellList;
+//            spellList = api.getDataSummonerSpellList(Platform.OCE);
+//            for (SummonerSpell a : spellList.getData().values()){
+//                System.out.println(a.getName());
+//            }
 
         }
 

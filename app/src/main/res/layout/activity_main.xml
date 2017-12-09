@@ -51,14 +51,14 @@
                 android:layout_marginTop="15dp"
                 android:text="Player Profiles"/>
 
-            <Button
-                android:id="@+id/Champion_statistics_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Champion Statistics"
-                tools:layout_editor_absoluteX="252dp"
-                android:layout_marginTop="15dp"
-                tools:layout_editor_absoluteY="90dp"/>
+            <!--<Button-->
+                <!--android:id="@+id/Champion_statistics_button"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Champion Statistics"-->
+                <!--tools:layout_editor_absoluteX="252dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--tools:layout_editor_absoluteY="90dp"/>-->
         </LinearLayout>
     </ScrollView>
 

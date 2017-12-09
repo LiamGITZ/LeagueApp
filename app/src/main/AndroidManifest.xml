@@ -42,11 +42,12 @@
         <activity
             android:name=".PlayerGuides.CreateGuide"
             android:label="@string/title_activity_create_guide"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
@@ -54,15 +55,25 @@
         <activity
             android:name=".PlayerGuides.ChampionSelect"
             android:label="@string/title_activity_search_items"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
-
                 android:resource="@xml/searchable"/>
+        </activity>
+        <activity
+            android:name=".PlayerGuides.ViewGuides"
+            android:label="@string/title_activity_view_guides"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".PlayerGuides.SingleGuideViewer"
+            android:label="@string/title_activity_single_guide_viewer"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

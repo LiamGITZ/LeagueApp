@@ -25,6 +25,7 @@ public class ChampionSelect extends AppCompatActivity {
   private ArrayList<ParentRow> parentList = new ArrayList<ParentRow>();
   private ArrayList<ParentRow> showTheseParentList = new ArrayList<ParentRow>();
   private MenuItem searchItem;
+  private String createOrView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class ChampionSelect extends AppCompatActivity {
     searchView = (SearchView) findViewById(R.id.action_search);
     searchView.setQueryHint("Enter Search");
     myList = (ExpandableListView) findViewById(R.id.expandableListView);
+
+    createOrView = getIntent().getExtras().getString("key1","view");
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
@@ -107,7 +110,7 @@ public class ChampionSelect extends AppCompatActivity {
     loadData();
 
     myList = (ExpandableListView) findViewById(R.id.expandableListView);
-    listAdapter = new MyExpandableListAdapter(this, parentList);
+    listAdapter = new MyExpandableListAdapter(this, parentList, createOrView);
 
     myList.setAdapter(listAdapter);
   }
