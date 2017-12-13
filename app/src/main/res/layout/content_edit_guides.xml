@@ -6,14 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="edu.illinois.finalproject.PlayerGuides.ViewGuides"
-    tools:showIn="@layout/activity_view_guides">
+    tools:context="edu.illinois.finalproject.PlayerGuides.EditGuides"
+    tools:showIn="@layout/activity_edit_guides">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/guide_View_Recycler"
+        android:id="@+id/guide_Edit_Recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="178dp"/>
 
 </android.support.constraint.ConstraintLayout>

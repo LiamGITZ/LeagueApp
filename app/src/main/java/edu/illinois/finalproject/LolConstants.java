@@ -63,6 +63,11 @@ public class LolConstants {
     });
 
     try {
+      apiAsync.awaitAll();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    try {
       // Wait for all asynchronous requests to finish
       apiAsync.awaitAll();
     } catch (InterruptedException e) {

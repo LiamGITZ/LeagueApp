@@ -158,7 +158,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
                 } else {
                     if (createOrView.equals("create")) {
                         Intent myIntent = new Intent(context, CreateGuide.class);
-                        myIntent.putExtra("key", childRow.getText());
+                        myIntent.putExtra("champion", childRow.getText());
                         context.startActivity(myIntent);
                     } else if (createOrView.equals("view")) {
                         Intent myIntent = new Intent(context, ViewGuides.class);

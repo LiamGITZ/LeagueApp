@@ -1,5 +1,7 @@
 package edu.illinois.finalproject.PlayerProfile;
 
+import android.widget.Toast;
+
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiAsync;
@@ -42,57 +44,61 @@ public class GetPlayerData {
   requestSummoner.await();
 
 
-   // Asynchronously get league information
-   AsyncRequest requestLeague = apiAsync.getLeaguePositionsBySummonerId(platform, eSummoner.summoner.getId());
-   requestLeague.addListeners(new RequestAdapter() {
-     @Override
-     public void onRequestSucceeded(AsyncRequest request) {
-       Set<LeaguePosition> leaguePositions = request.getDto();
-       if (leaguePositions == null || leaguePositions.isEmpty()) {
-         return;
-       }
-       for (LeaguePosition leaguePosition : leaguePositions) {
-         if (leaguePosition.getQueueType().equals(LeagueQueue.RANKED_SOLO_5x5.name())) {
-           eSummoner.leagueSolo = leaguePosition;
-         } else if (leaguePosition.getQueueType().equals(LeagueQueue.RANKED_FLEX_SR.name())) {
-           eSummoner.leagueFlexSR = leaguePosition;
-         } else if (leaguePosition.getQueueType().equals(LeagueQueue.RANKED_FLEX_TT.name())) {
-           eSummoner.leagueFlexTT = leaguePosition;
-         }
-       }
-     }
-   });
-
-   // get match information
-   AsyncRequest requestMatches = apiAsync.getMatchListByAccountId(platform, eSummoner.summoner.getAccountId());
-   requestMatches.addListeners(new RequestAdapter() {
-     @Override
-     public void onRequestSucceeded(AsyncRequest request) {
-       eSummoner.matches = request.getDto();
-     }
-   });
+if (eSummoner.summoner != null) {
+  // Asynchronously get league information
+  AsyncRequest requestLeague = apiAsync.getLeaguePositionsBySummonerId(platform, eSummoner.summoner.getId());
+  requestLeague.addListeners(new RequestAdapter() {
+    @Override
+    public void onRequestSucceeded(AsyncRequest request) {
+      Set<LeaguePosition> leaguePositions = request.getDto();
+      if (leaguePositions == null || leaguePositions.isEmpty()) {
+        return;
+      }
+      for (LeaguePosition leaguePosition : leaguePositions) {
+        if (leaguePosition.getQueueType().equals(LeagueQueue.RANKED_SOLO_5x5.name())) {
+          eSummoner.leagueSolo = leaguePosition;
+        } else if (leaguePosition.getQueueType().equals(LeagueQueue.RANKED_FLEX_SR.name())) {
+          eSummoner.leagueFlexSR = leaguePosition;
+        } else if (leaguePosition.getQueueType().equals(LeagueQueue.RANKED_FLEX_TT.name())) {
+          eSummoner.leagueFlexTT = leaguePosition;
+        }
+      }
+    }
+  });
 
 
-
-   // getting patch information
-   AsyncRequest requestRealm = apiAsync.getDataRealm(platform);
-   requestRealm.addListeners(new RequestAdapter() {
-     @Override
-     public void onRequestSucceeded(AsyncRequest request) {
-       eSummoner.relm = request.getDto();
-     }
-   });
-
-
-   try {
-     // Wait for all asynchronous requests to finish
-     apiAsync.awaitAll();
-   } catch (InterruptedException e) {
-     // We can use the Api's logger
-     RiotApi.log.log(Level.SEVERE, "Waiting Interrupted", e);
-   }
+  // get match information
+  AsyncRequest requestMatches = apiAsync.getMatchListByAccountId(platform, eSummoner.summoner.getAccountId());
+  requestMatches.addListeners(new RequestAdapter() {
+    @Override
+    public void onRequestSucceeded(AsyncRequest request) {
+      eSummoner.matches = request.getDto();
+    }
+  });
 
 
+
+  // getting patch information
+  AsyncRequest requestRealm = apiAsync.getDataRealm(platform);
+  requestRealm.addListeners(new RequestAdapter() {
+    @Override
+    public void onRequestSucceeded(AsyncRequest request) {
+      eSummoner.relm = request.getDto();
+    }
+  });
+  requestRealm.await();
+
+
+  try {
+    // Wait for all asynchronous requests to finish
+    apiAsync.awaitAll();
+  } catch (InterruptedException e) {
+    // We can use the Api's logger
+    RiotApi.log.log(Level.SEVERE, "Waiting Interrupted", e);
+  }
+}else{
+  return null;
+}
    return eSummoner;
  }
 }

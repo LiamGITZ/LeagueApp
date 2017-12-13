@@ -34,13 +34,14 @@ public class PlayerGuides extends AppCompatActivity {
 
     final Button viewGuides = findViewById(R.id.View_Guides_Button);
     final Button createGuides = findViewById(R.id.Create_Guides_Button);
+    final Button editGuides = findViewById(R.id.editGuidesButton);
 
     viewGuides.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent createGuideIntent = new Intent(context, ChampionSelect.class);
-        createGuideIntent.putExtra("key1","view");
-        context.startActivity(createGuideIntent);
+        Intent viewGuideIntent = new Intent(context, ChampionSelect.class);
+        viewGuideIntent.putExtra("key1","view");
+        context.startActivity(viewGuideIntent);
       }
     });
 
@@ -51,6 +52,7 @@ public class PlayerGuides extends AppCompatActivity {
         final Context context = view.getContext();
         Intent guideIntent = new Intent(context, ChampionSelect.class);
         if (user != null) {
+          guideIntent.putExtra("key1","create");
           context.startActivity(guideIntent);
         } else {
           // code from
@@ -77,16 +79,37 @@ public class PlayerGuides extends AppCompatActivity {
       }
     });
 
+    editGuides.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if (user != null) {
+          Intent editGuides = new Intent(context, EditGuides.class);
+          context.startActivity(editGuides);
+        } else {
+          // code from
+          // https://firebase.google.com/docs/auth/android/firebaseui
+          FirebaseApp.initializeApp(context);
 
 
-//    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//    fab.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show();
-//      }
-//    });
+          // Choose authentication providers
+          List<AuthUI.IdpConfig> providers = Arrays.asList(
+                  new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
+//                new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
+//                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+//                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
+//                new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build());
+
+          // Create and launch sign-in intent
+          startActivityForResult(
+                  AuthUI.getInstance()
+                          .createSignInIntentBuilder()
+                          .setAvailableProviders(providers)
+                          .build(),
+                  321);
+        }
+      }
+    });
+
   }
 
   @Override
@@ -102,6 +125,18 @@ public class PlayerGuides extends AppCompatActivity {
         Intent createGuideIntent = new Intent(context, ChampionSelect.class);
         createGuideIntent.putExtra("key1","create");
         context.startActivity(createGuideIntent);
+      } else {
+        // Sign in failed, check response for error code
+        // ...
+      }
+    } if (requestCode == 321) {
+      IdpResponse response = IdpResponse.fromResultIntent(data);
+
+      if (resultCode == ResultCodes.OK) {
+        // Successfully signed in
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        Intent editGuides = new Intent(context, EditGuides.class);
+        context.startActivity(editGuides);
       } else {
         // Sign in failed, check response for error code
         // ...

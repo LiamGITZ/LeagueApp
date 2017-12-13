@@ -29,9 +29,19 @@ import edu.illinois.finalproject.R;
 
 public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.ViewHolder>{
   private List<Guide> guideList = new ArrayList<>();
+  private String championName;
+  private ArrayList<String> championNames;
+  private ArrayList<String> guideIDs;
 
-  public GuideVIewAdapter(List<Guide> guideList){
+  public GuideVIewAdapter(List<Guide> guideList, String championName){
     this.guideList.addAll(guideList);
+    this.championName = championName;
+  }
+
+  public GuideVIewAdapter(List<Guide> guideList, ArrayList<String> championNames, ArrayList<String> guideIds){
+    this.guideList.addAll(guideList);
+    this.championNames = championNames;
+    this.guideIDs = guideIds;
   }
 
   public void addGuide(Guide givenGuide) {
@@ -52,7 +62,7 @@ public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.View
   }
 
   @Override
-  public void onBindViewHolder(GuideVIewAdapter.ViewHolder holder, int position) {
+  public void onBindViewHolder(GuideVIewAdapter.ViewHolder holder, final int position) {
     final Guide currentGuide = guideList.get(position);
     final Context context = holder.itemView.getContext();
 
@@ -75,16 +85,34 @@ public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.View
       Picasso.with(context)
               .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" + actualItem.getId() + ".png")
               .into(addedItem);
-
-      holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          Intent createViewGuideIntent = new Intent(context, SingleGuideViewer.class);
-          createViewGuideIntent.putExtra("guide",currentGuide);
-          context.startActivity(createViewGuideIntent);
-
-        }
-      });
+      if (championName != null) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent createViewGuideIntent = new Intent(context, SingleGuideViewer.class);
+            createViewGuideIntent.putExtra("guide", currentGuide);
+            createViewGuideIntent.putExtra("champion", championName);
+            context.startActivity(createViewGuideIntent);
+          }
+        });
+      } else if (championNames != null) {
+        Picasso.with(context)
+                .load("http://ddragon.leagueoflegends.com/cdn/7.23.1/img/champion/" +
+                        championNames.get(position) + ".png")
+                .into(holder.situtationChampImg);
+          holder.situtationChampImg.setVisibility(1);
+          
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Intent createViewGuideIntent = new Intent(context, CreateGuide.class);
+            createViewGuideIntent.putExtra("guide", currentGuide);
+            createViewGuideIntent.putExtra("champion", championNames.get(position));
+            createViewGuideIntent.putExtra("guideID", guideIDs.get(position));
+            context.startActivity(createViewGuideIntent);
+          }
+        });
+      }
     }
 
   }
@@ -98,13 +126,14 @@ public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.View
     public View itemView;
     public TextView guideTitle;
     public LinearLayout startingItems;
+    public ImageView situtationChampImg;
 
     public ViewHolder(View itemView) {
       super(itemView);
       this.itemView = itemView;
       this.guideTitle = itemView.findViewById(R.id.guideTitle);
       this.startingItems = itemView.findViewById(R.id.startingItemsViewGuide);
-
+      this.situtationChampImg = itemView.findViewById(R.id.champSituationalIMG);
 
     }
   }

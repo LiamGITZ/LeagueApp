@@ -37,7 +37,7 @@ public class ViewGuides extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
 
-    final String championName = getIntent().getExtras().getString("key","LeeSin");
+    final String championName = getIntent().getExtras().getString("key","leesin");
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("champions/"+championName+"/guides/");
 
@@ -53,15 +53,17 @@ public class ViewGuides extends AppCompatActivity {
           String title = (String) guideSnapshot.child("title").getValue();
           String intro = (String) guideSnapshot.child("introduction").getValue();
           List startingItems = (List) guideSnapshot.child("startingItems").getValue();
+          List summoners = (List) guideSnapshot.child("summoners").getValue();
 
           guide.setTitle(title);
           guide.setIntroduction(intro);
           guide.setStartingItems(startingItems);
+          guide.setSummoners(summoners);
           guides.add(guide);
         }
 
         final RecyclerView recyclerLayout = (RecyclerView) findViewById(R.id.guide_View_Recycler);
-        GuideVIewAdapter guideVIewAdapter = new GuideVIewAdapter(guides);
+        GuideVIewAdapter guideVIewAdapter = new GuideVIewAdapter(guides, championName);
         recyclerLayout.setAdapter(guideVIewAdapter);
         recyclerLayout.setLayoutManager(
                 new LinearLayoutManager(thisContext, LinearLayoutManager.VERTICAL, false));

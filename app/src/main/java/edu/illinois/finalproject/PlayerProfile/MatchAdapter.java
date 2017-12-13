@@ -40,8 +40,10 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder>{
   ExtendedSummoner extendedSummoner = null;
 
   public MatchAdapter(ExtendedSummoner extendedSummoner){
-    MatchList.addAll(extendedSummoner.matches.getMatches());
-    this.extendedSummoner = extendedSummoner;
+    if (extendedSummoner.matches != null) {
+      MatchList.addAll(extendedSummoner.matches.getMatches());
+      this.extendedSummoner = extendedSummoner;
+    }
   }
 
   public MatchAdapter(java.util.List<MatchReference> matches){

@@ -22,4 +22,5 @@
     <string name="title">Title:</string>
     <string name="title_activity_view_guides">ViewGuides</string>
     <string name="title_activity_single_guide_viewer">SingleGuideViewer</string>
+    <string name="title_activity_edit_guides">EditGuides</string>
 </resources>

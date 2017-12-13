@@ -139,7 +139,24 @@ public class ExampleUnitTest {
 //            for (SummonerSpell a : spellList.getData().values()){
 //                System.out.println(a.getName());
 //            }
-
         }
+
+    @Test
+    public void rndmData() throws Exception {
+        ApiConfig config = new ApiConfig().setKey(LoLApiKey.apiKey);
+        RiotApi api = new RiotApi(config);
+        RiotApiAsync apiAsync = api.getAsyncApi();
+        final ExtendedSummoner eSummoner = new ExtendedSummoner();
+
+        AsyncRequest requestRealm = apiAsync.getDataRealm(Platform.NA);
+        requestRealm.addListeners(new RequestAdapter() {
+            @Override
+            public void onRequestSucceeded(AsyncRequest request) {
+                eSummoner.relm = request.getDto();
+            }
+        });
+        requestRealm.await();
+        System.out.println(eSummoner.relm.getDd());
+    }
 
 }
