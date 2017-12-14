@@ -1,6 +1,5 @@
 package edu.illinois.finalproject.PlayerGuides;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -17,10 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import net.rithms.riot.api.endpoints.static_data.dto.Item;
@@ -94,11 +91,10 @@ public class CreateGuide extends AppCompatActivity {
     expandAll();
 
 
-
     // getIntent() is a method from the started activity for selected champion
-    final String championName = getIntent().getExtras().getString("champion","defaultKey");
+    final String championName = getIntent().getExtras().getString("champion", "defaultKey");
     ImageView championIcon = findViewById(R.id.championGuidePicture);
-    if (championName!=null){
+    if (championName != null) {
       Picasso.with(this)
               .load("http://ddragon.leagueoflegends.com/cdn/7.23.1/img/champion/" +
                       championName + ".png")
@@ -295,92 +291,92 @@ public class CreateGuide extends AppCompatActivity {
     final Context context = this;
 
     // if this guide is being edited
-    if (getIntent().hasExtra("guide")){
+    if (getIntent().hasExtra("guide")) {
       final Guide previousguide = getIntent().getParcelableExtra("guide");
-      final String guideID = getIntent().getExtras().getString("guideID","defaultKey");
-        Drawable highlight = getResources().getDrawable(R.drawable.hightlight);
-        summonersChosen[0] = previousguide.getSummoners().get(0).toString();
-        summonersChosen[1] = previousguide.getSummoners().get(1).toString();
-        summonerMap.get(summonersChosen[0]).setBackground(highlight);
-        summonerMap.get(summonersChosen[1]).setBackground(highlight);
+      final String guideID = getIntent().getExtras().getString("guideID", "defaultKey");
+      Drawable highlight = getResources().getDrawable(R.drawable.hightlight);
+      summonersChosen[0] = previousguide.getSummoners().get(0).toString();
+      summonersChosen[1] = previousguide.getSummoners().get(1).toString();
+      summonerMap.get(summonersChosen[0]).setBackground(highlight);
+      summonerMap.get(summonersChosen[1]).setBackground(highlight);
 
-        guideNameView.setText(previousguide.getTitle());
-        guideIntroductionView.setText(previousguide.getIntroduction());
+      guideNameView.setText(previousguide.getTitle());
+      guideIntroductionView.setText(previousguide.getIntroduction());
 
-        for (Object item : previousguide.getStartingItems()){
-          final String itemName = item.toString();
-          final ImageView addedItem = new ImageView(context);
-          LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                  , ViewGroup.LayoutParams.MATCH_PARENT);
-          param.setMargins(5, 2, 2, 2);
-          addedItem.setLayoutParams(param);
-          addedItem.setImageResource(R.drawable.barrier);
-          addedItem.getLayoutParams().height = 150;
-          addedItem.setTag(itemName);
-          startingItemsLayout.addView(addedItem);
+      for (Object item : previousguide.getStartingItems()) {
+        final String itemName = item.toString();
+        final ImageView addedItem = new ImageView(context);
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                , ViewGroup.LayoutParams.MATCH_PARENT);
+        param.setMargins(5, 2, 2, 2);
+        addedItem.setLayoutParams(param);
+        addedItem.setImageResource(R.drawable.barrier);
+        addedItem.getLayoutParams().height = 150;
+        addedItem.setTag(itemName);
+        startingItemsLayout.addView(addedItem);
 
-          Item itemObject = LolConstants.itemMap.get(itemName);
-          Picasso.with(context)
-                  .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" + itemObject.getId() + ".png")
-                  .into(addedItem);
+        Item itemObject = LolConstants.itemMap.get(itemName);
+        Picasso.with(context)
+                .load("http://ddragon.leagueoflegends.com/cdn/6.24.1/img/item/" + itemObject.getId() + ".png")
+                .into(addedItem);
 
-          addedItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              startingItemsLayout.removeView(addedItem);
-              Toast.makeText(context
-                      , itemName + " Removed from items"
-                      , Toast.LENGTH_SHORT).show();
-            }
-          });
-        }
-
-
-        Button editGuide = findViewById(R.id.Create_Guides_Button);
-        editGuide.setText("Edit Guide");
-
-        // make edits to guide
-        editGuide.setOnClickListener(new View.OnClickListener() {
+        addedItem.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            // getting current guide data
-            String guideName = guideNameView.getText().toString();
-            String guideIntroduction = guideIntroductionView.getText().toString();
-            List<String> summoners = Arrays.asList(summonersChosen);
-
-            List<String> startingItems = new ArrayList<>();
-            // getting starting items from layout
-            final int childCount = startingItemsLayout.getChildCount();
-            for (int i = 1; i < childCount; i++) {
-              View v = startingItemsLayout.getChildAt(i);
-              startingItems.add(String.valueOf(v.getTag()));
-            }
-
-            Guide champGuide = new Guide();
-            champGuide.setTitle(guideName);
-            champGuide.setIntroduction(guideIntroduction);
-            champGuide.setSummoners(summoners);
-            champGuide.setStartingItems(startingItems);
-            champGuide.setUser(PlayerGuides.user.getUid());
-
-            // pushing changes to firebase
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference guideRef = database.getReference("champions/"+championName+"/guides/"+guideID);
-            guideRef.child("title").setValue(champGuide.getTitle());
-            guideRef.child("introduction").setValue(champGuide.getIntroduction());
-            guideRef.child("startingItems").setValue(champGuide.getStartingItems());
-            guideRef.child("summoners").setValue(champGuide.getSummoners());
-
-            // go back to player guides screen
-            Intent intent = new Intent(context, PlayerGuides.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true);
-            startActivity(intent);
+            startingItemsLayout.removeView(addedItem);
+            Toast.makeText(context
+                    , itemName + " Removed from items"
+                    , Toast.LENGTH_SHORT).show();
           }
         });
+      }
 
 
-    } else{
+      Button editGuide = findViewById(R.id.Create_Guides_Button);
+      editGuide.setText("Edit Guide");
+
+      // make edits to guide
+      editGuide.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          // getting current guide data
+          String guideName = guideNameView.getText().toString();
+          String guideIntroduction = guideIntroductionView.getText().toString();
+          List<String> summoners = Arrays.asList(summonersChosen);
+
+          List<String> startingItems = new ArrayList<>();
+          // getting starting items from layout
+          final int childCount = startingItemsLayout.getChildCount();
+          for (int i = 1; i < childCount; i++) {
+            View v = startingItemsLayout.getChildAt(i);
+            startingItems.add(String.valueOf(v.getTag()));
+          }
+
+          Guide champGuide = new Guide();
+          champGuide.setTitle(guideName);
+          champGuide.setIntroduction(guideIntroduction);
+          champGuide.setSummoners(summoners);
+          champGuide.setStartingItems(startingItems);
+          champGuide.setUser(PlayerGuides.user.getUid());
+
+          // pushing changes to firebase
+          FirebaseDatabase database = FirebaseDatabase.getInstance();
+          DatabaseReference guideRef = database.getReference("champions/" + championName + "/guides/" + guideID);
+          guideRef.child("title").setValue(champGuide.getTitle());
+          guideRef.child("introduction").setValue(champGuide.getIntroduction());
+          guideRef.child("startingItems").setValue(champGuide.getStartingItems());
+          guideRef.child("summoners").setValue(champGuide.getSummoners());
+
+          // go back to player guides screen
+          Intent intent = new Intent(context, PlayerGuides.class);
+          intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+          intent.putExtra("EXIT", true);
+          startActivity(intent);
+        }
+      });
+
+
+    } else {
       // creating a new guide
 
       Button createGuide = findViewById(R.id.Create_Guides_Button);
@@ -408,11 +404,11 @@ public class CreateGuide extends AppCompatActivity {
 
           // push to firebase
           FirebaseDatabase database = FirebaseDatabase.getInstance();
-          DatabaseReference guideRef = database.getReference("champions/"+championName+"/guides/");
+          DatabaseReference guideRef = database.getReference("champions/" + championName + "/guides/");
           String guideId = guideRef.push().getKey();
           guideRef.push().setValue(champGuide);
           // add guide to User
-          DatabaseReference userRef = database.getReference("users/"+PlayerGuides.user.getUid()+"/");
+          DatabaseReference userRef = database.getReference("users/" + PlayerGuides.user.getUid() + "/");
           userRef.push().setValue(guideId);
 
 
@@ -430,7 +426,7 @@ public class CreateGuide extends AppCompatActivity {
     ArrayList<ChildRow> childRows = new ArrayList<ChildRow>();
     ParentRow parentRow = null;
 
-    for (Item i : LolConstants.itemList.getData().values()){
+    for (Item i : LolConstants.itemList.getData().values()) {
       childRows.add(new ChildRow(i.getId(), i.getName()));
     }
     parentRow = new ParentRow("Items", childRows);
@@ -464,7 +460,7 @@ public class CreateGuide extends AppCompatActivity {
     loadData();
 
     myList = (ExpandableListView) findViewById(R.id.expandableListView2);
-    listAdapter = new MyExpandableListAdapter(this, parentList , null);
+    listAdapter = new MyExpandableListAdapter(this, parentList, null);
 
     myList.setAdapter(listAdapter);
   }

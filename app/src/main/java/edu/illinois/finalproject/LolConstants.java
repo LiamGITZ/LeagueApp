@@ -22,12 +22,12 @@ import java.util.logging.Level;
 
 public class LolConstants {
   public static ChampionList champions;
-  public static Map<Integer,Champion> championMap = new HashMap<>();
+  public static Map<Integer, Champion> championMap = new HashMap<>();
   public static ItemList itemList;
-  public static Map<String,Item> itemMap = new HashMap<>();
+  public static Map<String, Item> itemMap = new HashMap<>();
   public static SummonerSpellList spellList;
 
-  public static void getData(){
+  public static void getData() {
     ApiConfig config = new ApiConfig().setKey(LoLApiKey.apiKey);
     RiotApi api = new RiotApi(config);
     RiotApiAsync apiAsync = api.getAsyncApi();

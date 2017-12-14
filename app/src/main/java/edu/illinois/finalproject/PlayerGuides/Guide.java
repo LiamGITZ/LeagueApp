@@ -26,6 +26,17 @@ import java.util.List;
 		}
  */
 public class Guide implements Parcelable {
+  public static final Parcelable.Creator<Guide> CREATOR = new Parcelable.Creator<Guide>() {
+    @Override
+    public Guide createFromParcel(Parcel source) {
+      return new Guide(source);
+    }
+
+    @Override
+    public Guide[] newArray(int size) {
+      return new Guide[size];
+    }
+  };
   private String user;
   private String title;
   private String introduction;
@@ -38,6 +49,24 @@ public class Guide implements Parcelable {
   private List<String> counters;
   private List<String> counteredBy;
   private List<String> quickTips;
+
+  public Guide() {
+  }
+
+  protected Guide(Parcel in) {
+    this.user = in.readString();
+    this.title = in.readString();
+    this.introduction = in.readString();
+    this.body = in.readString();
+    this.StartingItems = in.createStringArrayList();
+    this.CoreItems = in.createStringArrayList();
+    this.SituationalItems = in.createStringArrayList();
+    this.Summoners = in.createStringArrayList();
+    this.abilitySkillOrder = in.createStringArrayList();
+    this.counters = in.createStringArrayList();
+    this.counteredBy = in.createStringArrayList();
+    this.quickTips = in.createStringArrayList();
+  }
 
   public String getUser() {
     return user;
@@ -155,34 +184,4 @@ public class Guide implements Parcelable {
     dest.writeStringList(this.counteredBy);
     dest.writeStringList(this.quickTips);
   }
-
-  public Guide() {
-  }
-
-  protected Guide(Parcel in) {
-    this.user = in.readString();
-    this.title = in.readString();
-    this.introduction = in.readString();
-    this.body = in.readString();
-    this.StartingItems = in.createStringArrayList();
-    this.CoreItems = in.createStringArrayList();
-    this.SituationalItems = in.createStringArrayList();
-    this.Summoners = in.createStringArrayList();
-    this.abilitySkillOrder = in.createStringArrayList();
-    this.counters = in.createStringArrayList();
-    this.counteredBy = in.createStringArrayList();
-    this.quickTips = in.createStringArrayList();
-  }
-
-  public static final Parcelable.Creator<Guide> CREATOR = new Parcelable.Creator<Guide>() {
-    @Override
-    public Guide createFromParcel(Parcel source) {
-      return new Guide(source);
-    }
-
-    @Override
-    public Guide[] newArray(int size) {
-      return new Guide[size];
-    }
-  };
 }

@@ -1,6 +1,5 @@
 package edu.illinois.finalproject.PlayerGuides;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -17,28 +16,28 @@ import net.rithms.riot.api.endpoints.static_data.dto.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import edu.illinois.finalproject.ExtendedSummoner;
-import edu.illinois.finalproject.LolConstants;;
+import edu.illinois.finalproject.LolConstants;
 import edu.illinois.finalproject.R;
+
+;
 
 /**
  * Created by liam on 12/9/17.
  */
 
-public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.ViewHolder>{
+public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.ViewHolder> {
   private List<Guide> guideList = new ArrayList<>();
   private String championName;
   private ArrayList<String> championNames;
   private ArrayList<String> guideIDs;
 
-  public GuideVIewAdapter(List<Guide> guideList, String championName){
+  public GuideVIewAdapter(List<Guide> guideList, String championName) {
     this.guideList.addAll(guideList);
     this.championName = championName;
   }
 
-  public GuideVIewAdapter(List<Guide> guideList, ArrayList<String> championNames, ArrayList<String> guideIds){
+  public GuideVIewAdapter(List<Guide> guideList, ArrayList<String> championNames, ArrayList<String> guideIds) {
     this.guideList.addAll(guideList);
     this.championNames = championNames;
     this.guideIDs = guideIds;
@@ -57,7 +56,7 @@ public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.View
   @Override
   public GuideVIewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View singleGuide = LayoutInflater.from(parent.getContext()).
-            inflate(viewType,parent,false);
+            inflate(viewType, parent, false);
     return new ViewHolder(singleGuide);
   }
 
@@ -100,8 +99,8 @@ public class GuideVIewAdapter extends RecyclerView.Adapter<GuideVIewAdapter.View
                 .load("http://ddragon.leagueoflegends.com/cdn/7.23.1/img/champion/" +
                         championNames.get(position) + ".png")
                 .into(holder.situtationChampImg);
-          holder.situtationChampImg.setVisibility(1);
-          
+        holder.situtationChampImg.setVisibility(1);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {

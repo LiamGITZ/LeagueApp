@@ -21,9 +21,10 @@ import java.util.List;
 import edu.illinois.finalproject.R;
 
 public class PlayerGuides extends AppCompatActivity {
-  private static final int  RC_SIGN_IN = 123;
-  private Context context = this;
+  private static final int RC_SIGN_IN = 123;
   public static FirebaseUser user = null;
+  private Context context = this;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class PlayerGuides extends AppCompatActivity {
       @Override
       public void onClick(View view) {
         Intent viewGuideIntent = new Intent(context, ChampionSelect.class);
-        viewGuideIntent.putExtra("key1","view");
+        viewGuideIntent.putExtra("key1", "view");
         context.startActivity(viewGuideIntent);
       }
     });
@@ -52,7 +53,7 @@ public class PlayerGuides extends AppCompatActivity {
         final Context context = view.getContext();
         Intent guideIntent = new Intent(context, ChampionSelect.class);
         if (user != null) {
-          guideIntent.putExtra("key1","create");
+          guideIntent.putExtra("key1", "create");
           context.startActivity(guideIntent);
         } else {
           // code from
@@ -123,13 +124,14 @@ public class PlayerGuides extends AppCompatActivity {
         // Successfully signed in
         user = FirebaseAuth.getInstance().getCurrentUser();
         Intent createGuideIntent = new Intent(context, ChampionSelect.class);
-        createGuideIntent.putExtra("key1","create");
+        createGuideIntent.putExtra("key1", "create");
         context.startActivity(createGuideIntent);
       } else {
         // Sign in failed, check response for error code
         // ...
       }
-    } if (requestCode == 321) {
+    }
+    if (requestCode == 321) {
       IdpResponse response = IdpResponse.fromResultIntent(data);
 
       if (resultCode == ResultCodes.OK) {

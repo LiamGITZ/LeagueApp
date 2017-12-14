@@ -2,15 +2,10 @@ package edu.illinois.finalproject.PlayerGuides;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,12 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
-import edu.illinois.finalproject.PlayerProfile.MatchAdapter;
 import edu.illinois.finalproject.R;
-
-import static android.content.ContentValues.TAG;
 
 public class ViewGuides extends AppCompatActivity {
 
@@ -37,9 +28,9 @@ public class ViewGuides extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
 
-    final String championName = getIntent().getExtras().getString("key","leesin");
+    final String championName = getIntent().getExtras().getString("key", "leesin");
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference("champions/"+championName+"/guides/");
+    DatabaseReference ref = database.getReference("champions/" + championName + "/guides/");
 
     final List<Guide> guides = new ArrayList<Guide>();
     final Context thisContext = this;
@@ -68,6 +59,7 @@ public class ViewGuides extends AppCompatActivity {
         recyclerLayout.setLayoutManager(
                 new LinearLayoutManager(thisContext, LinearLayoutManager.VERTICAL, false));
       }
+
       @Override
       public void onCancelled(DatabaseError databaseError) {
       }

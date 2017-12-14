@@ -35,7 +35,7 @@ public class ChampionSelect extends AppCompatActivity {
     searchView.setQueryHint("Enter Search");
     myList = (ExpandableListView) findViewById(R.id.expandableListView);
 
-    createOrView = getIntent().getExtras().getString("key1","view");
+    createOrView = getIntent().getExtras().getString("key1", "view");
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
@@ -74,7 +74,7 @@ public class ChampionSelect extends AppCompatActivity {
     ArrayList<ChildRow> childRows = new ArrayList<ChildRow>();
     ParentRow parentRow = null;
 
-    for (Champion i : LolConstants.champions.getData().values()){
+    for (Champion i : LolConstants.champions.getData().values()) {
       childRows.add(new ChildRow(i.getId(), i.getKey())
 
       );

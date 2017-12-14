@@ -9,28 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import net.rithms.riot.api.ApiConfig;
-import net.rithms.riot.api.RiotApi;
-import net.rithms.riot.api.RiotApiAsync;
-import net.rithms.riot.api.endpoints.champion.dto.Champion;
-import net.rithms.riot.api.endpoints.league.constant.LeagueQueue;
-import net.rithms.riot.api.endpoints.league.dto.LeaguePosition;
-import net.rithms.riot.api.request.AsyncRequest;
-import net.rithms.riot.api.request.RequestAdapter;
 import net.rithms.riot.constant.Platform;
 
-import java.util.Set;
-import java.util.logging.Level;
-
 import edu.illinois.finalproject.ExtendedSummoner;
-import edu.illinois.finalproject.LoLApiKey;
 import edu.illinois.finalproject.R;
 
 public class PlayerProfile extends AppCompatActivity {
@@ -47,6 +33,7 @@ public class PlayerProfile extends AppCompatActivity {
 
     searchImg.setOnClickListener(new View.OnClickListener() {
       ExtendedSummoner eSummoner = null;
+
       @Override
       public void onClick(View view) {
         EditText enteredText = (EditText) findViewById(R.id.profileSearch);
@@ -54,7 +41,6 @@ public class PlayerProfile extends AppCompatActivity {
 
         String summonerName = enteredText.getText().toString(); // summonerId to request
         Platform platform = Platform.NA; // platform to request
-
 
 
         try {
@@ -83,7 +69,7 @@ public class PlayerProfile extends AppCompatActivity {
           recyclerLayout.setLayoutManager(
                   new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        }else {
+        } else {
           Toast.makeText(context
                   , "No such summoner"
                   , Toast.LENGTH_SHORT).show();
